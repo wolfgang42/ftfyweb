@@ -4,7 +4,6 @@ import ftfy
 @get('/')
 @view('index')
 def index():
-	print(request.query)
 	if 'mojibake' in request.query:
 		return {
 			'mojibake': request.query.mojibake,
