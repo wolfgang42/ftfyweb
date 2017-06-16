@@ -4,11 +4,16 @@ import ftfy
 @get('/')
 @view('index')
 def index():
-	return {'decoded': False}
-
-@post('/')
-@view('index')
-def convert():
-	return {'decoded': ftfy.fix_text(request.forms.mojibake)}
+	print(request.query)
+	if 'mojibake' in request.query:
+		return {
+			'mojibake': request.query.mojibake,
+			'decoded': ftfy.fix_text(request.query.mojibake),
+		}
+	else:
+		return {
+			'mojibake': '',
+			'decoded': False,
+		}
 
 run(host='0.0.0.0', port=8080, debug=True, reloader=True)

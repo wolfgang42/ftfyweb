@@ -13,9 +13,9 @@
 		</h1></div>
 	</header>
 	<main class="section container content">
-		<form method="POST">
+		<form method="GET">
 			<div class="field"><div class="control">
-				<textarea class="textarea" name="mojibake"></textarea>
+				<input type="text" class="input" name="mojibake" value="{{mojibake}}"/>
 			</div></div>
 			<div class="field"><div class="control">
 				 <input type="submit" class="button is-primary" value="Decode"/>
