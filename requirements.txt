@@ -1,0 +1,4 @@
+bottle==0.12.13
+ftfy==5.1.1
+pkg-resources==0.0.0
+wcwidth==0.1.7
