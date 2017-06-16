@@ -1,12 +1,13 @@
-from bottle import get, post, run, request, template, view
+from bottle import get, post, run, request, view
 import ftfy
 
 @get('/')
+@view('index')
 def index():
-	return template('index')
+	return {'decoded': False}
 
 @post('/')
-@view('decoded')
+@view('index')
 def convert():
 	return {'decoded': ftfy.fix_text(request.forms.mojibake)}
 
