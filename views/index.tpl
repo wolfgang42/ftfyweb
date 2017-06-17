@@ -16,6 +16,29 @@
 			color: #4a4a4a;
 			font-size: 1rem;
 		}
+		.footer { font-size: 85%; padding-bottom: 3rem; }
+		/* https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/ */
+		html {height: 100%; overflow: visible;}
+		body {
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: flex;
+			-webkit-box-orient: vertical;
+			-webkit-box-direction: normal;
+			-webkit-flex-direction: column;
+			flex-direction: column;
+			height: 100%;
+		}
+		header, footer {
+			-webkit-box-flex: 0;
+			-webkit-flex: none;
+			flex: none;
+		}
+		main {
+			-webkit-box-flex: 1;
+			-webkit-flex: 1 0 auto;
+			flex: 1 0 auto;
+		}
 	</style>
 </head><body>
 	<header class="hero is-primary is-bold">
@@ -41,5 +64,9 @@
 			<div class="result">{{decoded}}</div>
 		% end
 	</main>
+	<footer class="footer"><div class="container"><div class="content has-text-centered">
+		Built by <a href="https://www.linestarve.com/">Wolfgang Faust</a> &bull;
+		Powered by <a href="https://ftfy.readthedocs.io/en/latest/">ftfy</a>
+	</div></div></footer>
 </body></html>
 
