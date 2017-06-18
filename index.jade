@@ -13,6 +13,7 @@ html
 				padding-left: calc(0.625em - 1px);
 				padding-right: calc(0.625em - 1px);
 				padding-top: calc(0.375em - 1px);
+				margin-bottom: 0.75rem;
 				background-color: whitesmoke;
 				color: #4a4a4a;
 				font-size: 1rem;
@@ -54,9 +55,54 @@ html
 						input.input(type='text', name='mojibake', value=mojibake)
 					p.control
 						input.button.is-primary(type='submit', value='Decode')
-			if decoded
-				strong Decoded:
-				.result=decoded
+				if decoded
+					strong Decoded:
+					.result=decoded
+				.field.is-horizontal
+					.field-label.is-normal: label.label Fix entities
+					.field-body
+						.control: .field
+							.select: select(name="fix_entities")
+								option(value="True", selected=(options['fix_entities']==True)) Yes
+								option(value="False", selected=(options['fix_entities']==False)) No
+								option(value="auto", selected=(options['fix_entities']=='auto')) Auto
+							.help.
+								Yes: Replace HTML entities (e.g. #[code &amp;amp;]) with their values. #[br]
+								No: Do not replace HTML entities.#[br]
+								Auto: Replace HTML entities in text that doesn't look like HTML.
+				mixin option-bool(code, name, help)
+					.field.is-horizontal
+						.field-label: label.label=name
+						.field-body
+							.field.is-narrow: .control
+								label.radio
+									input(type="radio", name=code, value="True", checked=options[code])
+									= ' Yes'
+								label.radio
+									input(type="radio", name=code, value="False", checked=(not options[code]))
+									= ' No'
+								.help=help
+				+option-bool('remove_terminal_escapes', "Remove terminal escapes", "Remove terminal control sequences, like codes to change the text color.")
+				+option-bool('fix_encoding', "Fix encoding", "Attempt to repair mistakes caused by misinterpreting Unicode data.")
+				+option-bool('fix_latin_ligatures', "Separate Latin ligatures", "Separate ligatures (such as ﬁ) into individual letters.")
+				+option-bool('fix_character_width', "Fix character width", "Replace half-width and full-width characters with their standard-width form.")
+				+option-bool('uncurl_quotes', "Uncurl quotes", "Replace various forms of ‘curly’ “quotes” with plain ASCII 'straight' \"quotes\".")
+				+option-bool('fix_surrogates', "Fix surrogates", "Ensure that there are no UTF-16 surrogates in the resulting string, by converting them to the correct characters when they’re appropriately paired, or replacing them with ufffd otherwise.")
+				+option-bool('remove_control_chars', "Remove control characters", "Remove control characters that are not suitable for use in text. This includes most of the ASCII control characters, plus some Unicode controls such as the byte order mark (U+FEFF). Useful control characters, such as Tab, Line Feed, and bidirectional marks, are left as they are.")
+				.field.is-horizontal
+					.field-label.is-normal: label.label Normalization
+					.field-body
+						.control: .field
+							.select: select(name="normalization")
+								option(selected=(options['normalization'] == 'NFC')) NFC
+								option(selected=(options['normalization'] == 'NFD')) NFD
+								option(selected=(options['normalization'] == 'NFKC')) NFKC
+								option(selected=(options['normalization'] == 'NFKD')) NFKD
+							.help.
+								Which
+								#[a(href="https://en.wikipedia.org/wiki/Unicode_equivalence#Normal_forms") Unicode normal form]
+								to use for normalizing the string.
+
 		footer.footer
 			.container
 				.content.has-text-centered
