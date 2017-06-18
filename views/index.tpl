@@ -66,7 +66,7 @@
 	</main>
 	<footer class="footer"><div class="container"><div class="content has-text-centered">
 		Built by <a href="https://www.linestarve.com/">Wolfgang Faust</a> &bull;
-		Powered by <a href="https://ftfy.readthedocs.io/en/latest/">ftfy</a>
+		<a href="https://github.com/wolfgang42/ftfyweb"><img width="16" height="16" alt="GitHub:" style="vertical-align:middle;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABAAQMAAACQp+OdAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAAMxJREFUKFOt0rFtBCEURdE7IiCkBEqhNCZzWyO5EbYDNiNAXAesPCvboYmOxH/iIQDIAwCCXgAk7QBUXQCovkb2UFRtQFYdQFGdO7RjumPHxnkjrKKzXsSVtNVGXEGv2kgToHTyD4wbZQHUeaPurfWGAZDfsO+UvuE/I4vjhfv038V250URwEnxguAk2yE5yB8LqoP86RW0kx6eh3bi0/PQRuyCNsIooBfHAPTkmC+wnwGogAsoD3Dulrt4FGxAEPYPEIQdmwAk6PyxvgA2bdfnuuNAlAAAAABJRU5ErkJggg=="> wolfgang42/ftfyweb</a>
+		<div style="padding-top:.5em;">Powered by <a href="https://ftfy.readthedocs.io/en/latest/">ftfy</a></div>
 	</div></div></footer>
 </body></html>
-
