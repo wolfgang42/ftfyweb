@@ -1,16 +1,19 @@
-from bottle import get, post, run, request, view
+from bottle import install, get, post, run, request, view
+from bottle_jade import JadePlugin
+from os import path
 import ftfy
 
+jade = install(JadePlugin(template_folder=path.dirname(path.abspath(__file__))))
+
 @get('/')
-@view('index')
 def index():
 	if 'mojibake' in request.query:
-		return {
+		return jade.render('index.jade', **{
 			'mojibake': request.query.mojibake,
 			'decoded': ftfy.fix_text(request.query.mojibake),
-		}
+		})
 	else:
-		return {
+		return jade.render('index.jade', **{
 			'mojibake': '',
 			'decoded': False,
-		}
+		})
