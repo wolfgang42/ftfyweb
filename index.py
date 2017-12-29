@@ -1,6 +1,6 @@
 from bottle import install, get, post, run, request, view
 from bottle_jade import JadePlugin
-from os import path
+from os import path, environ
 import ftfy
 
 jade = install(JadePlugin(template_folder=path.dirname(path.abspath(__file__))))
@@ -39,10 +39,12 @@ def index():
 			'mojibake': request.query.mojibake,
 			'decoded': ftfy.fix_text(request.query.mojibake, **options),
 			'options': options,
+			'piwik': 'ENABLE_PIWIK' in environ,
 		})
 	else:
 		return jade.render('index.jade', **{
 			'mojibake': '',
 			'decoded': False,
 			'options': options,
+			'piwik': 'ENABLE_PIWIK' in environ,
 		})

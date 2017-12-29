@@ -115,3 +115,14 @@ html
 						img(width='16', height='16', alt='GitHub:', style='vertical-align:middle;', src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABAAQMAAACQp+OdAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAAMxJREFUKFOt0rFtBCEURdE7IiCkBEqhNCZzWyO5EbYDNiNAXAesPCvboYmOxH/iIQDIAwCCXgAk7QBUXQCovkb2UFRtQFYdQFGdO7RjumPHxnkjrKKzXsSVtNVGXEGv2kgToHTyD4wbZQHUeaPurfWGAZDfsO+UvuE/I4vjhfv038V250URwEnxguAk2yE5yB8LqoP86RW0kx6eh3bi0/PQRuyCNsIooBfHAPTkmC+wnwGogAsoD3Dulrt4FGxAEPYPEIQdmwAk6PyxvgA2bdfnuuNAlAAAAABJRU5ErkJggg==')
 						|  wolfgang42/ftfyweb
 					div(style='padding-top:.5em;') Powered by #[a(href='https://ftfy.readthedocs.io/en/latest/') ftfy]
+		if piwik
+			script(type="text/javascript").
+				var pkBaseURL = (("https:" == document.location.protocol) ? "https://analytics.linestarve.com/" : "http://analytics.linestarve.com/");
+				document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+			script(type="text/javascript").
+				try {
+				var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
+				piwikTracker.trackPageView();
+				piwikTracker.enableLinkTracking();
+				} catch( err ) {}
+			<noscript><p><img src="https://analytics.linestarve.com/piwik.php?idsite=1&rec=1" style="border:0" alt="" /></p></noscript>
