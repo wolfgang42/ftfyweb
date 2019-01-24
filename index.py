@@ -46,5 +46,6 @@ def index():
 			'mojibake': '',
 			'decoded': False,
 			'options': options,
+			'ftfy_version': ftfy.__version__,
 			'piwik': 'ENABLE_PIWIK' in environ,
 		})
