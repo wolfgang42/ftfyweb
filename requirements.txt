@@ -1,4 +1,4 @@
-bottle==0.12.16
+bottle==0.12.17
 bottle-jade==0.2.1
 ftfy==5.5.1
 pyjade==4.0.0
