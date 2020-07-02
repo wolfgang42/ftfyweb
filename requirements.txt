@@ -3,4 +3,4 @@ bottle-jade==0.2.1
 ftfy==5.5.1
 pyjade==4.0.0
 six==1.12.0
-wcwidth==0.1.7
+wcwidth==0.2.5
