@@ -39,6 +39,7 @@ def index():
 			'mojibake': request.query.mojibake,
 			'decoded': ftfy.fix_text(request.query.mojibake, **options),
 			'options': options,
+			'ftfy_version': ftfy.__version__,
 			'piwik': 'ENABLE_PIWIK' in environ,
 		})
 	else:
