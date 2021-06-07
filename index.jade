@@ -101,10 +101,10 @@ html
 					.field-label.is-normal: label.label Unescape HTML
 					.field-body
 						.control: .field
-							.select: select(name="fix_entities")
-								option(value="True", selected=(options['fix_entities']==True)) Yes
-								option(value="False", selected=(options['fix_entities']==False)) No
-								option(value="auto", selected=(options['fix_entities']=='auto')) Auto
+							.select: select(name="unescape_html")
+								option(value="True", selected=(options['unescape_html']==True)) Yes
+								option(value="False", selected=(options['unescape_html']==False)) No
+								option(value="auto", selected=(options['unescape_html']=='auto')) Auto
 							.help.
 								Yes: Replace HTML entities (e.g. #[code &amp;amp;]) with their values. #[br]
 								No: Do not replace HTML entities.#[br]

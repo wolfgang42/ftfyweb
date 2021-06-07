@@ -11,7 +11,7 @@ import pyjade, operator
 pyjade.ext.html.TYPE_CODE['elif'] = operator.truth
 
 DEFAULTS = {
-	'fix_entities': 'auto',
+	'unescape_html': 'auto',
 	'remove_terminal_escapes': False,
 	'fix_encoding': True,
 	'fix_latin_ligatures': True,
@@ -39,6 +39,10 @@ def paramValue(s):
 
 @get('/')
 def index():
+	# 'fix_entities' was renamed to 'unescape_html'
+	if 'fix_entities' in request.query and 'unescape_html' not in request.query:
+		request.query['unescape_html'] = request.query['fix_entities']
+
 	options = {}
 	for key in DEFAULTS:
 		if key in request.query:
