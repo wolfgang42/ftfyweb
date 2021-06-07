@@ -10,17 +10,21 @@ jade = install(JadePlugin(template_folder=path.dirname(path.abspath(__file__))))
 import pyjade, operator
 pyjade.ext.html.TYPE_CODE['elif'] = operator.truth
 
-DEFAULTS = {
-	'unescape_html': 'auto',
-	'remove_terminal_escapes': False,
-	'fix_encoding': True,
-	'fix_latin_ligatures': True,
-	'fix_character_width': True,
-	'uncurl_quotes': False,
-	'fix_surrogates': True,
-	'remove_control_chars': True,
-	'normalization': 'NFC',
-}
+
+OPTIONS = [
+	'unescape_html',
+	'remove_terminal_escapes',
+	'fix_encoding',
+	'fix_latin_ligatures',
+	'fix_character_width',
+	'uncurl_quotes',
+	'fix_surrogates',
+	'remove_control_chars',
+	'normalization',
+]
+DEFAULTS = {}
+for opt in OPTIONS:
+	DEFAULTS[opt] = getattr(ftfy.TextFixerConfig(), opt)
 
 # Get explanations for each fix
 # (this also gets docstrings for other stuff in ftfy.fixes, but we don't care about that)
