@@ -46,6 +46,8 @@ def index():
 		else:
 			options[key] = DEFAULTS[key]
 
+	if options['normalization'] == 'None': options['normalization'] = None
+
 	if 'mojibake' in request.query:
 		decoded, explanation = ftfy.fix_and_explain(request.query.mojibake, **options, explain=True)
 		return jade.render('index.jade', **{
