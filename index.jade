@@ -18,6 +18,7 @@ html
 				font-size: 1rem;
 			}
 			summary { cursor: pointer }
+			#fix_encoding_options>.field {margin-bottom: 0.5rem}
 			.footer { font-size: 85%; padding-bottom: 3rem; }
 				/* https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/ */
 				html {height: 100%; overflow: visible;}
@@ -48,7 +49,7 @@ html
 					.title Mojibake Decoder
 					// div class="subtitle">L&amp;amp;Atilde;&amp;amp;sup3;pez?</div
 		main.section.container.content
-			form(method='GET')
+			form(method='GET')#form
 				label.label(for='mojibake') Mojibake:
 				.field.has-addons
 					p.control.is-expanded
@@ -121,8 +122,26 @@ html
 									input(type="radio", name=code, value="False", checked=(not options[code]))
 									= ' No'
 								.help!=help
+
 				+option-bool('remove_terminal_escapes', "Remove terminal escapes", "Remove “ANSI” terminal control sequences, like codes to change the text color.")
-				+option-bool('fix_encoding', "Fix encoding", "Attempt to repair mistakes caused by misinterpreting Unicode data, by decoding the text in a different encoding standard.")
+
+				.field.is-horizontal.mb-0
+					.field-label: label.label Fix encoding
+					.field-body
+						.field.is-narrow: .control
+							label.radio
+								input(type="radio", name='fix_encoding', value="True", checked=options['fix_encoding'])
+								= ' Yes'
+							label.radio
+								input(type="radio", name='fix_encoding', value="False", checked=(not options['fix_encoding']))
+								= ' No'
+							.help Attempt to repair mistakes caused by misinterpreting Unicode data, by decoding the text in a different encoding standard.
+							#fix_encoding_options.mt-2
+								+option-bool('restore_byte_a0', "Restore byte A0", "Allow a literal space (U+20) to be interpreted as a non-breaking space (U+A0) when that would make it part of a fixable mojibake string.")
+								+option-bool('replace_lossy_sequences', 'Replace lossy sequences', "Detect mojibake that has been partially replaced by the characters ‘�’ or ‘?’. If the mojibake could be decoded otherwise, replace the detected sequence with ‘�’.")
+								+option-bool('decode_inconsistent_utf8', 'Decode inconsistent UTF-8', "When we see sequences that distinctly look like UTF-8 mojibake, but there’s no consistent way to reinterpret the string in a new encoding, replace the mojibake with the appropriate UTF-8 characters anyway. This helps to decode strings that are concatenated from different encodings.")
+								+option-bool('fix_c1_controls', 'Fix C1 controls', "Replace C1 control characters (the useless characters U+80 - U+9B that come from Latin-1) with their Windows-1252 equivalents, like HTML5 does, even if the whole string doesn’t decode as Latin-1.")
+
 				+option-bool('fix_latin_ligatures', "Separate Latin ligatures", "Separate ligatures (such as ﬁ) into individual letters.")
 				+option-bool('fix_character_width', "Fix character width", "Replace fullwidth Latin characters and halfwidth Katakana with their more standard widths.")
 				+option-bool('uncurl_quotes', "Uncurl quotes", "Replace various forms of ‘curly’ “quotes” with plain ASCII 'straight' \"quotes\".")
@@ -155,6 +174,14 @@ html
 						img(width='16', height='16', alt='GitHub:', style='vertical-align:middle;', src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABAAQMAAACQp+OdAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAAMxJREFUKFOt0rFtBCEURdE7IiCkBEqhNCZzWyO5EbYDNiNAXAesPCvboYmOxH/iIQDIAwCCXgAk7QBUXQCovkb2UFRtQFYdQFGdO7RjumPHxnkjrKKzXsSVtNVGXEGv2kgToHTyD4wbZQHUeaPurfWGAZDfsO+UvuE/I4vjhfv038V250URwEnxguAk2yE5yB8LqoP86RW0kx6eh3bi0/PQRuyCNsIooBfHAPTkmC+wnwGogAsoD3Dulrt4FGxAEPYPEIQdmwAk6PyxvgA2bdfnuuNAlAAAAABJRU5ErkJggg==')
 						|  wolfgang42/ftfyweb
 					div(style='padding-top:.5em;') Powered by #[a(href='https://ftfy.readthedocs.io/en/latest/') ftfy] v#{ftfy_version}
+		script.
+			var fix_encoding_input = document.getElementById('form').elements['fix_encoding']
+			function fix_encoding_subopts() {
+				var enabled = fix_encoding_input.value === 'True'
+				Array.from(document.querySelectorAll('#fix_encoding_options input')).forEach(function(e) {e.disabled = !enabled})
+			}
+			Array.from(fix_encoding_input).forEach(function(e) {e.addEventListener('input', fix_encoding_subopts)})
+			fix_encoding_subopts()
 		if piwik
 			script(type="text/javascript").
 				var pkBaseURL = (("https:" == document.location.protocol) ? "https://analytics.linestarve.com/" : "http://analytics.linestarve.com/");
