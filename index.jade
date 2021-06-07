@@ -13,11 +13,11 @@ html
 				padding-left: calc(0.625em - 1px);
 				padding-right: calc(0.625em - 1px);
 				padding-top: calc(0.375em - 1px);
-				margin-bottom: 0.75rem;
 				background-color: whitesmoke;
 				color: #4a4a4a;
 				font-size: 1rem;
 			}
+			summary { cursor: pointer }
 			.footer { font-size: 85%; padding-bottom: 3rem; }
 				/* https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/ */
 				html {height: 100%; overflow: visible;}
@@ -58,6 +58,45 @@ html
 				if decoded
 					strong Decoded:
 					.result=decoded
+					details.mb-5
+						summary Decoding steps
+						if len(explanation) == 0
+							p: em No decoding (string is same as original)
+						else
+							ol.mt-0
+								each step in explanation
+									if step[0] == 'encode'
+										li
+											='encode (string→bytes) as '
+											if step[1].startswith('sloppy-')
+												a(href='https://ftfy.readthedocs.io/en/latest/bad_encodings.html#module-ftfy.bad_codecs.sloppy')=step[1]
+											elif step[1] == 'utf-8-variants'
+												a(href='https://ftfy.readthedocs.io/en/latest/bad_encodings.html#module-ftfy.bad_codecs.utf8_variants')=step[1]
+											else
+												=step[1]
+									elif step[0] == 'decode'
+										li
+											='decode (bytes→string) as '
+											if step[1].startswith('sloppy-')
+												a(href='https://ftfy.readthedocs.io/en/latest/bad_encodings.html#module-ftfy.bad_codecs.sloppy')=step[1]
+											elif step[1] == 'utf-8-variants'
+												a(href='https://ftfy.readthedocs.io/en/latest/bad_encodings.html#module-ftfy.bad_codecs.utf8_variants')=step[1]
+											else
+												=step[1]
+									elif step[0] == 'apply'
+										li
+											='apply (string→string) '
+											a(href='https://ftfy.readthedocs.io/en/latest/fixes.html#ftfy.fixes.'+step[1])=step[1]
+											//-=': '
+											p.help.mt-0=FIX_EXPLANATIONS[step[1]]
+									elif step[0] == 'transcode'
+										li
+											='transcode (bytes→bytes) with '
+											a(href='https://ftfy.readthedocs.io/en/latest/fixes.html#ftfy.fixes.'+step[1])=step[1]
+											//-=': '
+											p.help=FIX_EXPLANATIONS[step[1]]
+									else
+										li=step
 				.field.is-horizontal
 					.field-label.is-normal: label.label Fix entities
 					.field-body
