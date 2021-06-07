@@ -98,7 +98,7 @@ html
 									else
 										li=step
 				.field.is-horizontal
-					.field-label.is-normal: label.label Fix entities
+					.field-label.is-normal: label.label Unescape HTML
 					.field-body
 						.control: .field
 							.select: select(name="fix_entities")
@@ -108,7 +108,7 @@ html
 							.help.
 								Yes: Replace HTML entities (e.g. #[code &amp;amp;]) with their values. #[br]
 								No: Do not replace HTML entities.#[br]
-								Auto: Replace HTML entities in text that doesn't look like HTML.
+								Auto: Replace HTML entities in text that doesn’t contain a literal #[code &lt;] indicating that the input is actual HTML.
 				mixin option-bool(code, name, help)
 					.field.is-horizontal
 						.field-label: label.label=name
@@ -120,14 +120,14 @@ html
 								label.radio
 									input(type="radio", name=code, value="False", checked=(not options[code]))
 									= ' No'
-								.help=help
-				+option-bool('remove_terminal_escapes', "Remove terminal escapes", "Remove terminal control sequences, like codes to change the text color.")
-				+option-bool('fix_encoding', "Fix encoding", "Attempt to repair mistakes caused by misinterpreting Unicode data.")
+								.help!=help
+				+option-bool('remove_terminal_escapes', "Remove terminal escapes", "Remove “ANSI” terminal control sequences, like codes to change the text color.")
+				+option-bool('fix_encoding', "Fix encoding", "Attempt to repair mistakes caused by misinterpreting Unicode data, by decoding the text in a different encoding standard.")
 				+option-bool('fix_latin_ligatures', "Separate Latin ligatures", "Separate ligatures (such as ﬁ) into individual letters.")
-				+option-bool('fix_character_width', "Fix character width", "Replace half-width and full-width characters with their standard-width form.")
+				+option-bool('fix_character_width', "Fix character width", "Replace fullwidth Latin characters and halfwidth Katakana with their more standard widths.")
 				+option-bool('uncurl_quotes', "Uncurl quotes", "Replace various forms of ‘curly’ “quotes” with plain ASCII 'straight' \"quotes\".")
-				+option-bool('fix_surrogates', "Fix surrogates", "Ensure that there are no UTF-16 surrogates in the resulting string, by converting them to the correct characters when they’re appropriately paired, or replacing them with ufffd otherwise.")
-				+option-bool('remove_control_chars', "Remove control characters", "Remove control characters that are not suitable for use in text. This includes most of the ASCII control characters, plus some Unicode controls such as the byte order mark (U+FEFF). Useful control characters, such as Tab, Line Feed, and bidirectional marks, are left as they are.")
+				+option-bool('fix_surrogates', "Fix surrogates", "Replace sequences of UTF-16 surrogate codepoints with the character they were meant to encode. This fixes text that was decoded with the obsolete UCS-2 standard, and allows it to support high-numbered codepoints such as emoji.")
+				+option-bool('remove_control_chars', "Remove control characters", 'Remove certain control characters that have no displayed effect on text. This includes most of the ASCII control characters, plus some Unicode controls such as the byte order mark (U+FEFF). Useful control characters, such as Tab, Line Feed, and bidirectional marks, are left as they are. See the <a href="https://ftfy.readthedocs.io/en/latest/fixes.html#ftfy.fixes.remove_control_chars">ftfy docs</a> for the full list.')
 				.field.is-horizontal
 					.field-label.is-normal: label.label Normalization
 					.field-body
