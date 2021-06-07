@@ -9,3 +9,9 @@ virtualenv -ppython3 venv
 ./venv/bin/pip3 install -r requirements.txt
 ./venv/bin/python3 -m bottle --debug --reload index
 ```
+
+# Testing
+Smoke tests to make sure we seem to be doing the right thing:
+```sh
+python3 ./test.py localhost:8080
+```
