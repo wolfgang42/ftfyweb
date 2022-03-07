@@ -81,3 +81,6 @@ for test in TESTS:
 		raise Exception(f'HTML did not mirror input: {repr(parser.input)} != {repr(test.input)}')
 	if parser.result != test.result:
 		raise Exception(f'HTML did not have correct result: {repr(parser.result)} != {repr(test.result)}')
+
+print()
+print('All tests passed')
