@@ -1,15 +1,6 @@
 from bottle import install, get, post, run, request, view
-from bottle_jade import JadePlugin
 from os import path, environ
 import ftfy
-
-jade = install(JadePlugin(template_folder=path.dirname(path.abspath(__file__))))
-
-# Bugfix for python-jade: pyjade/ext/html.py:TYPE_CODE has a typo and incorrectly declares 'elsif' instead of 'elif'
-# Upstream seems to have been abandoned so we just hack it here
-import pyjade, operator
-pyjade.ext.html.TYPE_CODE['elif'] = operator.truth
-
 
 OPTIONS = [
 	'unescape_html',
@@ -46,6 +37,7 @@ def paramValue(s):
 		return s
 
 @get('/')
+@view('index.tpl')
 def index():
 	# 'fix_entities' was renamed to 'unescape_html'
 	if 'fix_entities' in request.query and 'unescape_html' not in request.query:
@@ -62,7 +54,7 @@ def index():
 
 	if 'mojibake' in request.query:
 		decoded, explanation = ftfy.fix_and_explain(request.query.mojibake, **options, explain=True)
-		return jade.render('index.jade', **{
+		return {
 			'mojibake': request.query.mojibake,
 			'decoded': decoded,
 			'explanation': explanation,
@@ -70,12 +62,12 @@ def index():
 			'options': options,
 			'ftfy_version': ftfy.__version__,
 			'piwik': 'ENABLE_PIWIK' in environ,
-		})
+		}
 	else:
-		return jade.render('index.jade', **{
+		return {
 			'mojibake': '',
 			'decoded': False,
 			'options': options,
 			'ftfy_version': ftfy.__version__,
 			'piwik': 'ENABLE_PIWIK' in environ,
-		})
+		}
