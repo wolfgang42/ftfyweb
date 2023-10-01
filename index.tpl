@@ -206,15 +206,17 @@
 			fix_encoding_subopts()
 		</script>
 		% if piwik:
-			script(type="text/javascript").
+			<script type="text/javascript">
 				var pkBaseURL = (("https:" == document.location.protocol) ? "https://analytics.linestarve.com/" : "http://analytics.linestarve.com/");
 				document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
-			script(type="text/javascript").
+			</script>
+			<script type="text/javascript">
 				try {
 				var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
 				piwikTracker.trackPageView();
 				piwikTracker.enableLinkTracking();
 				} catch( err ) {}
+			</script>
 			<noscript><p><img src="https://analytics.linestarve.com/piwik.php?idsite=1&rec=1" style="border:0" alt="" /></p></noscript>
 		% end
 	</body>
